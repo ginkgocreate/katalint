@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "katalint"
+dynamic = ["version"]
+description = "A fast, deterministic linter for AI coding agent instructions."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "typer>=0.12",
+]
+
+[project.scripts]
+katalint = "katalint.cli:app"
+
+[tool.setuptools.dynamic]
+version = {attr = "katalint.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
