@@ -12,7 +12,7 @@ RULE_SLUGS = {
     "KTL001": "context-bloat",
     "KTL002": "lint-leakage",
     "KTL003": "blind-references",
-    "KTL004": "init-fossilization",
+    "KTL004": "prohibition-overload",
     "KTL101": "missing-acceptance-criteria",
     "KTL102": "missing-verification-command",
     "KTL103": "missing-handoff-fields",

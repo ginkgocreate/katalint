@@ -71,6 +71,21 @@ def test_reporter_renders_text_and_json_with_exit_codes() -> None:
     assert EXIT_INTERNAL_ERROR == 3
 
 
+def test_reporter_uses_prohibition_overload_slug_for_ktl004() -> None:
+    finding = Finding(
+        rule_id="KTL004",
+        category="config",
+        file="AGENTS.md",
+        line=1,
+        message="AGENTS.md has 8 prohibitions and 0 must-do instructions.",
+        suggestion="Rewrite key prohibitions as positive instructions.",
+    )
+
+    text = render_findings([finding], output_format="text")
+
+    assert "  warning KTL004 config/prohibition-overload" in text.splitlines()
+
+
 def test_rule_registry_auto_discovers_added_rule_files(tmp_path: Path, monkeypatch) -> None:
     package_dir = tmp_path / "sample_rules"
     write_file(package_dir / "__init__.py")

@@ -104,3 +104,16 @@ own, regardless of ratio -- so this does not fire.
 - Keep the root instruction file focused on what to do, using a handful of
   the most important prohibitions as guardrails rather than an exhaustive
   ban list.
+
+## Known limitations (v0)
+
+The positive-directive ("must-do") detection is heuristic. In particular the
+bare verb `do` is treated as a must-do marker, so an all-prohibition config
+phrased with "MUST NOT do X" or "Do not do X" can under-count: the trailing
+`do` in "do X" is credited as a must-do even though the sentence is purely a
+prohibition. Such prohibition-only files may therefore slip below the ratio
+gate and be missed (a false negative).
+
+This trade-off is accepted for v0 -- it keeps detection deterministic and
+avoids semantic judgement -- and the must-do vocabulary may be refined in a
+later revision.

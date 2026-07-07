@@ -135,7 +135,7 @@ broad task scope.
 | KTL001 | config | Context file is too large | warning |
 | KTL002 | config | Instructions duplicate deterministic lint or format rules | warning |
 | KTL003 | config | References are too vague or unresolved | warning |
-| KTL004 | config | Agent config appears generated once and never maintained | warning |
+| KTL004 | config | Config file dominated by prohibitions with too few must-do instructions | warning |
 | KTL101 | workflow | Task packet has no acceptance criteria | error |
 | KTL102 | workflow | Task packet has no verification command | error |
 | KTL103 | workflow | Handoff document misses required fields | error |

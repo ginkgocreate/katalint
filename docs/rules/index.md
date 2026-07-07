@@ -16,7 +16,7 @@ katalint rule IDs use the `KTL` prefix.
 | KTL001 | config | Context Bloat | AGENTS.md, AGENTS.override.md, CLAUDE.md, .claude/agents/*.md | warning | line count and byte count |
 | KTL002 | config | Lint Leakage | agent config files | warning | lint, format, and style vocabulary plus existing config files |
 | KTL003 | config | Blind References | agent config files | warning | vague references without nearby URL, path, or explanation |
-| KTL004 | config | Init Fossilization | AGENTS.md, CLAUDE.md | warning | low update count in Git history while repository keeps changing |
+| KTL004 | config | Prohibition Overload | AGENTS.md, AGENTS.override.md, CLAUDE.md, .claude/agents/*.md | warning | prohibition count and must-do ratio |
 | KTL101 | workflow | Missing Acceptance Criteria | task packets | error | missing accepted section aliases |
 | KTL102 | workflow | Missing Verification Command | task packets | error | missing verification section or command vocabulary |
 | KTL103 | workflow | Missing Handoff Fields | handoff documents | error | required handoff fields absent |
