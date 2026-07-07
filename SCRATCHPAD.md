@@ -8,6 +8,8 @@
 - Verified PR-0 docs with `python3 -m unittest discover -s tests`.
 - Verified whitespace with `git diff --check`.
 - Committed the initial PR-0 scope work on `feature/pr-0-scope-docs`.
+- Attempted `git push origin feature/pr-0-scope-docs`; it failed because no
+  `origin` remote is configured.
 
 ## Findings
 
