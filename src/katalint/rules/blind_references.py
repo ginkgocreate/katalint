@@ -42,7 +42,8 @@ class BlindReferencesRule(Rule):
     )
     _SECTION_RE: ClassVar[re.Pattern[str]] = re.compile(r"section|§|##", re.IGNORECASE)
     _EXPLANATION_RE: ClassVar[re.Pattern[str]] = re.compile(
-        r"\b(because|for example|e\.g\.|i\.e\.|namely|specifically)\b", re.IGNORECASE
+        r"(?:\b(?:because|for example|that is|namely|specifically)\b|(?<![A-Za-z])(?:e\.g\.|i\.e\.))",
+        re.IGNORECASE,
     )
 
     _ANCHOR_PATTERNS: ClassVar[tuple[re.Pattern[str], ...]] = (

@@ -95,3 +95,36 @@ def test_applies_to_config_only() -> None:
     assert rule.applies_to("task") is False
     assert rule.applies_to("handoff") is False
     assert rule.applies_to("unknown") is False
+
+
+def test_eg_abbreviation_is_an_explanation_anchor(tmp_path: Path) -> None:
+    target = tmp_path / "AGENTS.md"
+    target.write_text(
+        "follow the existing pattern, e.g. mirror the parser flow\n",
+        encoding="utf-8",
+    )
+    rule = BlindReferencesRule()
+    assert rule.check(target) == []
+
+
+def test_ie_abbreviation_is_an_explanation_anchor(tmp_path: Path) -> None:
+    target = tmp_path / "AGENTS.md"
+    target.write_text(
+        "use the current approach, i.e. batch writes then flush once\n",
+        encoding="utf-8",
+    )
+    rule = BlindReferencesRule()
+    assert rule.check(target) == []
+
+
+def test_genuinely_unanchored_vague_reference_still_flagged(tmp_path: Path) -> None:
+    target = tmp_path / "AGENTS.md"
+    target.write_text(
+        "just follow the existing pattern here\n",
+        encoding="utf-8",
+    )
+    rule = BlindReferencesRule()
+    findings = rule.check(target)
+    assert len(findings) == 1
+    assert findings[0].line == 1
+    assert findings[0].rule_id == "KTL003"
