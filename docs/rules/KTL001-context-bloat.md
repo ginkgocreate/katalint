@@ -72,8 +72,11 @@ Always follow these rules.
 
 ## Detection
 
-v0 counts physical lines and UTF-8 bytes. A finding is emitted when either value
-exceeds the configured threshold.
+v0 counts physical lines and UTF-8 bytes. A finding is emitted when the line
+count exceeds `max_lines` (strictly greater), or the byte size reaches or
+exceeds `max_bytes` (greater than or equal). The byte check fires at the cap
+because a file that has reached the 32 KiB budget is already at the limit of
+Codex's combined instruction-chain allowance.
 
 ## Suggested remediation
 
