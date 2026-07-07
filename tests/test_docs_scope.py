@@ -70,6 +70,16 @@ class DocumentationScopeTests(unittest.TestCase):
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, adr)
 
+    def test_references_record_external_verification_status(self) -> None:
+        readme = self.read("README.md")
+        self.assertIn("arXiv:2606.15828v2", readme)
+        self.assertIn("Verified on 2026-07-07", readme)
+
+    def test_scratchpad_records_pr0_file_scope(self) -> None:
+        scratchpad = self.read("SCRATCHPAD.md")
+        self.assertIn("PR-0 required scope: 5 documentation files", scratchpad)
+        self.assertIn("Process additions: 1 scratchpad and 1 contract test", scratchpad)
+
 
 if __name__ == "__main__":
     unittest.main()

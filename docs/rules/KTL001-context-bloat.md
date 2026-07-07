@@ -36,8 +36,9 @@ these files small encourages maintainers to move long procedures, examples, and
 one-off task notes into more specific documents.
 
 The byte threshold mirrors the default Codex project guidance cap documented
-for AGENTS.md discovery. The line threshold is a conservative reviewability
-default for v0.
+for AGENTS.md discovery. The line threshold follows Claude Code's documented
+guidance to target concise CLAUDE.md files under 200 lines. Both references
+were verified on 2026-07-07.
 
 ## Bad
 

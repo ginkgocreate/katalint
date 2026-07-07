@@ -241,14 +241,16 @@ until PR-6 so adoption, CI examples, and dogfooding are in place.
 ## References
 
 - OpenAI Codex documents AGENTS.md discovery, layered guidance, and the default
-  32 KiB project guidance cap:
+  32 KiB project guidance cap. Verified on 2026-07-07:
   https://developers.openai.com/codex/guides/agents-md
 - Claude Code documents CLAUDE.md memory behavior and recommends specific,
-  concise instructions:
+  concise instructions. Verified on 2026-07-07:
   https://docs.anthropic.com/en/docs/claude-code/memory
 - Claude Code documents project and user subagents as Markdown files with YAML
-  frontmatter:
+  frontmatter. Verified on 2026-07-07:
   https://docs.anthropic.com/en/docs/claude-code/sub-agents
-- "Configuration Smells in AGENTS.md Files" catalogues six configuration
-  smells for AGENTS.md and CLAUDE.md files:
+- arXiv:2606.15828v2, "Configuration Smells in AGENTS.md Files: Common
+  Mistakes in Configuring Coding Agents", catalogues six configuration smells
+  for AGENTS.md and CLAUDE.md files. Verified on 2026-07-07; arXiv lists v2 as
+  dated 2026-06-16:
   https://arxiv.org/abs/2606.15828

@@ -15,6 +15,11 @@
 
 - The parent `/Users/user/work` directory is not a Git repository.
 - katalint did not previously exist under `/Users/user/work`.
+- arXiv:2606.15828 exists on arXiv as `2606.15828v2 [cs.SE]`, dated
+  2026-06-16. The README reference was updated with verification status.
+- PR-0 required scope: 5 documentation files.
+- Process additions: 1 scratchpad and 1 contract test.
+- Total committed files for PR-0: 7 files.
 
 ## Next Actions
 
