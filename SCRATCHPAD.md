@@ -20,6 +20,10 @@
 - PR-0 required scope: 5 documentation files.
 - Process additions: 1 scratchpad and 1 contract test.
 - Total committed files for PR-0: 7 files.
+- Name availability spot check on 2026-07-07: PyPI returned no matching
+  distribution for `katalint`; npm returned 404 for `katalint`; GitHub search
+  found no exact `katalint` repository, only the nearby `mbbo128/katalinter`.
+  Name reservation is still a human-gated action.
 
 ## Next Actions
 
