@@ -5,6 +5,9 @@
 - Created the katalint project directory as a new Git repository.
 - Created the PR-0 scope documentation scaffold.
 - Added documentation contract tests for the PR-0 acceptance conditions.
+- Verified PR-0 docs with `python3 -m unittest discover -s tests`.
+- Verified whitespace with `git diff --check`.
+- Committed the initial PR-0 scope work on `feature/pr-0-scope-docs`.
 
 ## Findings
 
