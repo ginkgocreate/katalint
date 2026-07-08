@@ -10,6 +10,8 @@
 - Committed the initial PR-0 scope work on `feature/pr-0-scope-docs`.
 - Attempted `git push origin feature/pr-0-scope-docs`; it failed because no
   `origin` remote is configured.
+- Merged PR #10, integrating PR1.1 discovery robustness, config rules KTL001-KTL003,
+  and workflow rules KTL101-KTL104 into `main`.
 
 ## Findings
 
@@ -24,12 +26,19 @@
   distribution for `katalint`; npm returned 404 for `katalint`; GitHub search
   found no exact `katalint` repository, only the nearby `mbbo128/katalinter`.
   Name reservation is still a human-gated action.
+- `origin` is now configured as `https://github.com/ginkgocreate/katalint.git`.
+- PR3.4 was not merged because it changes KTL004 from the locked
+  `Init Fossilization` rule to `Prohibition Overload`.
 
 ## Next Actions
 
-- Implement PR-1: CLI skeleton and file discovery.
-- Add pyproject.toml when CLI work begins.
+- Decide whether `Prohibition Overload` should become a later config rule under a
+  new ID, or be dropped.
+- Implement the locked KTL004 `Init Fossilization` rule, or explicitly revise the
+  v0 rule catalogue.
+- Start PR-5: configuration, suppressions, and baseline once KTL004 is resolved.
 
 ## Stocked Issues
 
-- [BLOCKED] No remote `origin` is configured yet, so feature branch push and PR creation cannot be completed from this workspace.
+- [QUESTION] PR3.4 implements `Prohibition Overload` as KTL004, but the locked
+  v0 catalogue defines KTL004 as `Init Fossilization`.
