@@ -12,6 +12,8 @@
   `origin` remote is configured.
 - Merged PR #10, integrating PR1.1 discovery robustness, config rules KTL001-KTL003,
   and workflow rules KTL101-KTL104 into `main`.
+- Implemented locked KTL004 `Init Fossilization` on
+  `feature/pr3.4-init-fossilization`.
 
 ## Findings
 
@@ -27,18 +29,20 @@
   found no exact `katalint` repository, only the nearby `mbbo128/katalinter`.
   Name reservation is still a human-gated action.
 - `origin` is now configured as `https://github.com/ginkgocreate/katalint.git`.
-- PR3.4 was not merged because it changes KTL004 from the locked
+- The earlier `feature/pr3.4-prohibition-overload` branch was not merged because
+  it changes KTL004 from the locked
   `Init Fossilization` rule to `Prohibition Overload`.
+- KTL004 `Init Fossilization` uses Git history only: AGENTS.md/CLAUDE.md,
+  tracked files, repository commits >= 8, and file commits <= 1.
 
 ## Next Actions
 
 - Decide whether `Prohibition Overload` should become a later config rule under a
   new ID, or be dropped.
-- Implement the locked KTL004 `Init Fossilization` rule, or explicitly revise the
-  v0 rule catalogue.
 - Start PR-5: configuration, suppressions, and baseline once KTL004 is resolved.
 
 ## Stocked Issues
 
-- [QUESTION] PR3.4 implements `Prohibition Overload` as KTL004, but the locked
-  v0 catalogue defines KTL004 as `Init Fossilization`.
+- [QUESTION] The earlier `feature/pr3.4-prohibition-overload` branch implements
+  `Prohibition Overload` as KTL004, but the locked v0 catalogue defines KTL004
+  as `Init Fossilization`. Decide whether Prohibition Overload gets a later ID.
