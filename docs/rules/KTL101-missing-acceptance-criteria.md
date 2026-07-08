@@ -25,7 +25,9 @@ error
 
 - `## Acceptance Criteria`
 - `## Done When`
+- `## Definition of Done`
 - `## 完了条件`
+- `## 受け入れ条件`
 
 ## Rationale
 
@@ -68,3 +70,11 @@ to judge whether the listed criteria are good enough.
 - Add a clear acceptance criteria section.
 - Prefer observable outcomes over implementation wishes.
 - Include at least one verification-oriented criterion when possible.
+
+## Known limitations (v0)
+
+Detection is line-based, not a full CommonMark parser. Standard fenced code
+blocks (``` and ~~~, three markers) and closing ATX hashes are handled, but
+some exotic Markdown is only approximated and may rarely be mis-scanned:
+fences longer than three markers, indented (4-space) code blocks, and
+info-string edge cases. This is accepted for v0 and can be tightened later.
