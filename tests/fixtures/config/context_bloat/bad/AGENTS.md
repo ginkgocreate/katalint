@@ -1,0 +1,228 @@
+# AGENTS.md — Monolithic Service Guide
+
+## Overview
+
+This document is intentionally too long for one repository-level instruction
+file. It remains below the byte budget, but it has more than two hundred lines
+so the KTL001 line-count warning can be tested without triggering the byte
+warning.
+
+## Environment
+
+- Use Python 3.11 or newer.
+- Create a virtual environment with `python -m venv .venv`.
+- Install dependencies with `pip install -e .[dev]`.
+- Run `pytest` before sending changes for review.
+
+## Working Agreements
+
+- Guideline 001: Keep functions small.
+- Guideline 002: Prefer clear names.
+- Guideline 003: Add useful tests.
+- Guideline 004: Avoid hidden state.
+- Guideline 005: Document public APIs.
+- Guideline 006: Handle errors locally.
+- Guideline 007: Keep logs concise.
+- Guideline 008: Protect secrets.
+- Guideline 009: Review dependencies.
+- Guideline 010: Keep modules focused.
+- Guideline 011: Keep functions small.
+- Guideline 012: Prefer clear names.
+- Guideline 013: Add useful tests.
+- Guideline 014: Avoid hidden state.
+- Guideline 015: Document public APIs.
+- Guideline 016: Handle errors locally.
+- Guideline 017: Keep logs concise.
+- Guideline 018: Protect secrets.
+- Guideline 019: Review dependencies.
+- Guideline 020: Keep modules focused.
+- Guideline 021: Keep functions small.
+- Guideline 022: Prefer clear names.
+- Guideline 023: Add useful tests.
+- Guideline 024: Avoid hidden state.
+- Guideline 025: Document public APIs.
+- Guideline 026: Handle errors locally.
+- Guideline 027: Keep logs concise.
+- Guideline 028: Protect secrets.
+- Guideline 029: Review dependencies.
+- Guideline 030: Keep modules focused.
+- Guideline 031: Keep functions small.
+- Guideline 032: Prefer clear names.
+- Guideline 033: Add useful tests.
+- Guideline 034: Avoid hidden state.
+- Guideline 035: Document public APIs.
+- Guideline 036: Handle errors locally.
+- Guideline 037: Keep logs concise.
+- Guideline 038: Protect secrets.
+- Guideline 039: Review dependencies.
+- Guideline 040: Keep modules focused.
+- Guideline 041: Keep functions small.
+- Guideline 042: Prefer clear names.
+- Guideline 043: Add useful tests.
+- Guideline 044: Avoid hidden state.
+- Guideline 045: Document public APIs.
+- Guideline 046: Handle errors locally.
+- Guideline 047: Keep logs concise.
+- Guideline 048: Protect secrets.
+- Guideline 049: Review dependencies.
+- Guideline 050: Keep modules focused.
+- Guideline 051: Keep functions small.
+- Guideline 052: Prefer clear names.
+- Guideline 053: Add useful tests.
+- Guideline 054: Avoid hidden state.
+- Guideline 055: Document public APIs.
+- Guideline 056: Handle errors locally.
+- Guideline 057: Keep logs concise.
+- Guideline 058: Protect secrets.
+- Guideline 059: Review dependencies.
+- Guideline 060: Keep modules focused.
+- Guideline 061: Keep functions small.
+- Guideline 062: Prefer clear names.
+- Guideline 063: Add useful tests.
+- Guideline 064: Avoid hidden state.
+- Guideline 065: Document public APIs.
+- Guideline 066: Handle errors locally.
+- Guideline 067: Keep logs concise.
+- Guideline 068: Protect secrets.
+- Guideline 069: Review dependencies.
+- Guideline 070: Keep modules focused.
+- Guideline 071: Keep functions small.
+- Guideline 072: Prefer clear names.
+- Guideline 073: Add useful tests.
+- Guideline 074: Avoid hidden state.
+- Guideline 075: Document public APIs.
+- Guideline 076: Handle errors locally.
+- Guideline 077: Keep logs concise.
+- Guideline 078: Protect secrets.
+- Guideline 079: Review dependencies.
+- Guideline 080: Keep modules focused.
+- Guideline 081: Keep functions small.
+- Guideline 082: Prefer clear names.
+- Guideline 083: Add useful tests.
+- Guideline 084: Avoid hidden state.
+- Guideline 085: Document public APIs.
+- Guideline 086: Handle errors locally.
+- Guideline 087: Keep logs concise.
+- Guideline 088: Protect secrets.
+- Guideline 089: Review dependencies.
+- Guideline 090: Keep modules focused.
+- Guideline 091: Keep functions small.
+- Guideline 092: Prefer clear names.
+- Guideline 093: Add useful tests.
+- Guideline 094: Avoid hidden state.
+- Guideline 095: Document public APIs.
+- Guideline 096: Handle errors locally.
+- Guideline 097: Keep logs concise.
+- Guideline 098: Protect secrets.
+- Guideline 099: Review dependencies.
+- Guideline 100: Keep modules focused.
+- Guideline 101: Keep functions small.
+- Guideline 102: Prefer clear names.
+- Guideline 103: Add useful tests.
+- Guideline 104: Avoid hidden state.
+- Guideline 105: Document public APIs.
+- Guideline 106: Handle errors locally.
+- Guideline 107: Keep logs concise.
+- Guideline 108: Protect secrets.
+- Guideline 109: Review dependencies.
+- Guideline 110: Keep modules focused.
+- Guideline 111: Keep functions small.
+- Guideline 112: Prefer clear names.
+- Guideline 113: Add useful tests.
+- Guideline 114: Avoid hidden state.
+- Guideline 115: Document public APIs.
+- Guideline 116: Handle errors locally.
+- Guideline 117: Keep logs concise.
+- Guideline 118: Protect secrets.
+- Guideline 119: Review dependencies.
+- Guideline 120: Keep modules focused.
+- Guideline 121: Keep functions small.
+- Guideline 122: Prefer clear names.
+- Guideline 123: Add useful tests.
+- Guideline 124: Avoid hidden state.
+- Guideline 125: Document public APIs.
+- Guideline 126: Handle errors locally.
+- Guideline 127: Keep logs concise.
+- Guideline 128: Protect secrets.
+- Guideline 129: Review dependencies.
+- Guideline 130: Keep modules focused.
+- Guideline 131: Keep functions small.
+- Guideline 132: Prefer clear names.
+- Guideline 133: Add useful tests.
+- Guideline 134: Avoid hidden state.
+- Guideline 135: Document public APIs.
+- Guideline 136: Handle errors locally.
+- Guideline 137: Keep logs concise.
+- Guideline 138: Protect secrets.
+- Guideline 139: Review dependencies.
+- Guideline 140: Keep modules focused.
+- Guideline 141: Keep functions small.
+- Guideline 142: Prefer clear names.
+- Guideline 143: Add useful tests.
+- Guideline 144: Avoid hidden state.
+- Guideline 145: Document public APIs.
+- Guideline 146: Handle errors locally.
+- Guideline 147: Keep logs concise.
+- Guideline 148: Protect secrets.
+- Guideline 149: Review dependencies.
+- Guideline 150: Keep modules focused.
+- Guideline 151: Keep functions small.
+- Guideline 152: Prefer clear names.
+- Guideline 153: Add useful tests.
+- Guideline 154: Avoid hidden state.
+- Guideline 155: Document public APIs.
+- Guideline 156: Handle errors locally.
+- Guideline 157: Keep logs concise.
+- Guideline 158: Protect secrets.
+- Guideline 159: Review dependencies.
+- Guideline 160: Keep modules focused.
+- Guideline 161: Keep functions small.
+- Guideline 162: Prefer clear names.
+- Guideline 163: Add useful tests.
+- Guideline 164: Avoid hidden state.
+- Guideline 165: Document public APIs.
+- Guideline 166: Handle errors locally.
+- Guideline 167: Keep logs concise.
+- Guideline 168: Protect secrets.
+- Guideline 169: Review dependencies.
+- Guideline 170: Keep modules focused.
+- Guideline 171: Keep functions small.
+- Guideline 172: Prefer clear names.
+- Guideline 173: Add useful tests.
+- Guideline 174: Avoid hidden state.
+- Guideline 175: Document public APIs.
+- Guideline 176: Handle errors locally.
+- Guideline 177: Keep logs concise.
+- Guideline 178: Protect secrets.
+- Guideline 179: Review dependencies.
+- Guideline 180: Keep modules focused.
+- Guideline 181: Keep functions small.
+- Guideline 182: Prefer clear names.
+- Guideline 183: Add useful tests.
+- Guideline 184: Avoid hidden state.
+- Guideline 185: Document public APIs.
+- Guideline 186: Handle errors locally.
+- Guideline 187: Keep logs concise.
+- Guideline 188: Protect secrets.
+- Guideline 189: Review dependencies.
+- Guideline 190: Keep modules focused.
+- Guideline 191: Keep functions small.
+- Guideline 192: Prefer clear names.
+- Guideline 193: Add useful tests.
+- Guideline 194: Avoid hidden state.
+- Guideline 195: Document public APIs.
+- Guideline 196: Handle errors locally.
+- Guideline 197: Keep logs concise.
+- Guideline 198: Protect secrets.
+- Guideline 199: Review dependencies.
+- Guideline 200: Keep modules focused.
+- Guideline 201: Keep functions small.
+- Guideline 202: Prefer clear names.
+- Guideline 203: Add useful tests.
+- Guideline 204: Avoid hidden state.
+- Guideline 205: Document public APIs.
+- Guideline 206: Handle errors locally.
+- Guideline 207: Keep logs concise.
+- Guideline 208: Protect secrets.
+- Guideline 209: Review dependencies.
+- Guideline 210: Keep modules focused.
