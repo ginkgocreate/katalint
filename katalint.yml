@@ -1,0 +1,37 @@
+version: 1
+targets:
+  agent_configs:
+    - AGENTS.md
+    - AGENTS.override.md
+    - CLAUDE.md
+    - .claude/agents/*.md
+  task_packets:
+    - .agent/tasks/**/*.md
+    - docs/agent/tasks/**/*.md
+  handoffs:
+    - .agent/handoffs/**/*.md
+    - docs/agent/handoffs/**/*.md
+rules:
+  KTL001:
+    max_lines: 200
+    max_bytes: 32768
+    severity: warning
+  KTL004:
+    severity: warning
+  KTL101:
+    severity: error
+  KTL102:
+    severity: error
+  KTL103:
+    severity: error
+  KTL104:
+    max_files_per_task: 5
+    severity: warning
+fail_on: error
+ignore:
+  - vendor/**
+  - node_modules/**
+  - .git/**
+  - dist/**
+  - build/**
+  - docs/archive/**
