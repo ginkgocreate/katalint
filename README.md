@@ -1,5 +1,8 @@
 # katalint
 
+[![katalint](https://github.com/ginkgocreate/katalint/actions/workflows/katalint.yml/badge.svg)](https://github.com/ginkgocreate/katalint/actions/workflows/katalint.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 A fast, deterministic linter for AI coding agent instructions.
 
 katalint checks AGENTS.md, CLAUDE.md, Claude Code subagents, task packets,
