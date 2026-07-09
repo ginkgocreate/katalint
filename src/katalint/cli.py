@@ -1,6 +1,8 @@
 from dataclasses import replace
 import fnmatch
 import hashlib
+from importlib import resources
+from importlib.resources.abc import Traversable
 import json
 from pathlib import Path
 import re
@@ -126,12 +128,12 @@ def check(
 @app.command()
 def explain(rule_id: str) -> None:
     normalized_rule_id = rule_id.upper()
-    docs = sorted(_rules_docs_dir().glob(f"{normalized_rule_id}-*.md"))
-    if not docs:
+    doc = _find_rule_doc(normalized_rule_id)
+    if doc is None:
         typer.echo(f"{normalized_rule_id} is 未実装/予約.")
         raise typer.Exit(EXIT_OK)
 
-    typer.echo(docs[0].read_text(encoding="utf-8"))
+    typer.echo(doc.read_text(encoding="utf-8"))
 
 
 def _print_targets(targets: list[Target]) -> None:
@@ -329,5 +331,17 @@ def _finding_fingerprint(finding: Finding) -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
-def _rules_docs_dir() -> Path:
+def _find_rule_doc(rule_id: str) -> Traversable | Path | None:
+    source_docs = sorted(_repo_rules_docs_dir().glob(f"{rule_id}-*.md"))
+    if source_docs:
+        return source_docs[0]
+
+    packaged_docs = resources.files("katalint.rule_docs")
+    for doc in sorted(packaged_docs.iterdir(), key=lambda item: item.name):
+        if doc.name.startswith(f"{rule_id}-") and doc.name.endswith(".md"):
+            return doc
+    return None
+
+
+def _repo_rules_docs_dir() -> Path:
     return Path(__file__).resolve().parents[2] / "docs" / "rules"
