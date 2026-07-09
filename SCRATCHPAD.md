@@ -14,6 +14,8 @@
   and workflow rules KTL101-KTL104 into `main`.
 - Implemented locked KTL004 `Init Fossilization` on
   `feature/pr3.4-init-fossilization`.
+- Implemented PR-5 configuration, inline suppressions, and baseline support on
+  `feature/pr5-config-suppressions-baseline`.
 
 ## Findings
 
@@ -34,12 +36,16 @@
   `Init Fossilization` rule to `Prohibition Overload`.
 - KTL004 `Init Fossilization` uses Git history only: AGENTS.md/CLAUDE.md,
   tracked files, repository commits >= 8, and file commits <= 1.
+- PR-5 loads `katalint.yml`, supports `fail_on`, custom targets, ignore globs,
+  rule severity/options, reason-required inline suppressions, and JSON baseline
+  read/write.
 
 ## Next Actions
 
 - Decide whether `Prohibition Overload` should become a later config rule under a
   new ID, or be dropped.
-- Start PR-5: configuration, suppressions, and baseline once KTL004 is resolved.
+- Open and merge PR-5 once review/CI passes.
+- Start PR-6: CI integration, dogfooding files, and examples.
 
 ## Stocked Issues
 

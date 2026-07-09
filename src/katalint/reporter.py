@@ -28,7 +28,13 @@ def render_findings(findings: list[Finding], output_format: str = "text") -> str
     raise ValueError(f"unsupported output format: {output_format}")
 
 
-def exit_code_for_findings(findings: list[Finding]) -> int:
+def exit_code_for_findings(findings: list[Finding], fail_on: str = "warning") -> int:
+    if fail_on == "error":
+        return (
+            EXIT_FINDINGS
+            if any(finding.severity == "error" for finding in findings)
+            else EXIT_OK
+        )
     return EXIT_FINDINGS if findings else EXIT_OK
 
 

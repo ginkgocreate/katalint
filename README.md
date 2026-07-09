@@ -9,8 +9,9 @@ coding agents less reliable.
 It does not run agents, call models, or orchestrate workflows. It only checks
 the instructions you give to agents.
 
-Status: PR-0 design scaffold. The CLI contract is documented here before the
-implementation starts.
+Status: active v0 implementation. The CLI can discover targets, run the active
+deterministic rules, load `katalint.yml`, apply inline suppressions, and use a
+baseline file.
 
 ## What it is
 
@@ -76,7 +77,7 @@ acceptance criteria, verification commands, and explicit next actions.
 
 ## Quick start
 
-Target v0 CLI:
+Basic CLI:
 
 ```bash
 katalint check
@@ -85,11 +86,13 @@ katalint check .claude/agents/
 katalint explain KTL001
 ```
 
-Target CI contract:
+CI-oriented output:
 
 ```bash
 katalint check --format text
 katalint check --format json
+katalint check --write-baseline katalint-baseline.json
+katalint check --baseline katalint-baseline.json
 ```
 
 ## Example output
@@ -99,11 +102,11 @@ AGENTS.md
   warning KTL001 config/context-bloat
   AGENTS.md has 236 lines. Recommended default is 200 lines or less.
 
-docs/tasks/fix-parser.md
+docs/agent/tasks/fix-parser.md
   error KTL101 workflow/missing-acceptance-criteria
   Task packet has no acceptance criteria section.
 
-docs/handoff/2026-07-07.md
+docs/agent/handoffs/2026-07-07.md
   error KTL103 workflow/missing-handoff-fields
   Missing required handoff fields: tests, risks, next_action.
 ```
@@ -116,10 +119,18 @@ katalint discovers these files by default:
 - AGENTS.override.md
 - CLAUDE.md
 - .claude/agents/*.md
-- docs/tasks/**/*.md
-- docs/handoff/**/*.md
-- .katalint/tasks/**/*.md
-- .katalint/handoff/**/*.md
+- .agent/tasks/**/*.md
+- docs/agent/tasks/**/*.md
+- .agent/handoffs/**/*.md
+- docs/agent/handoffs/**/*.md
+
+The default ignore list is:
+
+- vendor/**
+- node_modules/**
+- .git/**
+- dist/**
+- build/**
 
 Configuration checks look for persistent instruction-file smells such as
 context bloat, lint leakage, vague references, and stale generated files.
@@ -151,19 +162,23 @@ Reserved rules:
 
 ## Configuration
 
-Target v0 configuration shape:
+katalint loads `katalint.yml` from the current working directory by default.
+Use `--config PATH` to load a different file.
 
 ```yaml
 version: 1
 targets:
   agent_configs:
     - AGENTS.md
+    - AGENTS.override.md
     - CLAUDE.md
     - .claude/agents/*.md
   task_packets:
-    - docs/tasks/**/*.md
+    - .agent/tasks/**/*.md
+    - docs/agent/tasks/**/*.md
   handoffs:
-    - docs/handoff/**/*.md
+    - .agent/handoffs/**/*.md
+    - docs/agent/handoffs/**/*.md
 rules:
   KTL001:
     max_lines: 200
@@ -173,13 +188,15 @@ rules:
     max_files_per_task: 5
     severity: warning
 fail_on: error
+baseline: katalint-baseline.json
 ignore:
   - vendor/**
   - docs/archive/**
 ```
 
-Configuration loading is out of scope for PR-0 and scheduled after the rule
-engine exists.
+`fail_on: error` keeps warning findings visible without failing CI. Rule
+settings can override severity and rule-specific numeric thresholds such as
+`KTL001.max_lines` and `KTL104.max_files_per_task`.
 
 ## CI usage
 
@@ -200,18 +217,26 @@ jobs:
       - run: uvx katalint check
 ```
 
-CI integration is scheduled after the active v0 rules exist.
+Reusable CI examples and dogfooding files are scheduled for PR-6.
 
 ## Suppressions
 
-Target inline suppression format:
+Inline suppression format:
 
 ```markdown
 <!-- katalint-disable KTL002: project intentionally documents style because no formatter exists -->
 ```
 
-Suppressions must include a reason. They are planned for the configuration and
-baseline phase, not PR-0.
+Suppressions must include a reason. Comments without a reason are ignored.
+
+Baseline files can be created with:
+
+```bash
+katalint check --write-baseline katalint-baseline.json
+```
+
+Then pass `--baseline katalint-baseline.json` or set `baseline:` in
+`katalint.yml` to filter known findings during incremental adoption.
 
 ## Design principles
 
