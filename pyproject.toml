@@ -9,6 +9,7 @@ description = "A fast, deterministic linter for AI coding agent instructions."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+  "PyYAML>=6.0",
   "typer>=0.12",
 ]
 
