@@ -16,6 +16,8 @@
   `feature/pr3.4-init-fossilization`.
 - Implemented PR-5 configuration, inline suppressions, and baseline support on
   `feature/pr5-config-suppressions-baseline`.
+- Started PR-6 CI integration, dogfooding files, and examples on
+  `feature/pr6-ci-dogfooding-examples`.
 
 ## Findings
 
@@ -39,13 +41,16 @@
 - PR-5 loads `katalint.yml`, supports `fail_on`, custom targets, ignore globs,
   rule severity/options, reason-required inline suppressions, and JSON baseline
   read/write.
+- PR-6 dogfooding uses `fail_on: error` so warnings remain visible without
+  blocking incremental adoption.
 
 ## Next Actions
 
 - Decide whether `Prohibition Overload` should become a later config rule under a
   new ID, or be dropped.
-- Open and merge PR-5 once review/CI passes.
-- Start PR-6: CI integration, dogfooding files, and examples.
+- Open and merge PR-6 once review/CI passes.
+- Start PR-7 only if scaffold/init is still desired after v0.1.0 packaging
+  work is clear.
 
 ## Stocked Issues
 

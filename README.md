@@ -200,7 +200,8 @@ settings can override severity and rule-specific numeric thresholds such as
 
 ## CI usage
 
-Target GitHub Actions usage:
+GitHub Actions usage for a repository that installs katalint from its local
+checkout:
 
 ```yaml
 name: katalint
@@ -213,11 +214,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v5
-      - run: uvx katalint check
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e .
+      - run: katalint check
 ```
 
-Reusable CI examples and dogfooding files are scheduled for PR-6.
+This repository dogfoods that workflow in `.github/workflows/katalint.yml`.
+Published-package consumers can use the same command after installing katalint
+with their package manager.
+
+For pre-commit, use the local hook shape in
+`docs/examples/pre-commit-config.yaml`.
+
+## Examples
+
+The example task packets show the expected workflow-rule behavior:
+
+```bash
+katalint check docs/examples/bad-task.md
+katalint check docs/examples/good-task.md
+```
+
+- `docs/examples/bad-task.md` is intentionally missing acceptance criteria and
+  a verification command.
+- `docs/examples/good-task.md` includes both and should produce no findings.
 
 ## Suppressions
 
