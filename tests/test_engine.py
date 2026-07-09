@@ -198,3 +198,12 @@ def test_cli_explain_reads_existing_docs_and_handles_unknown_ids() -> None:
     assert "# KTL001: Context Bloat" in existing_result.output
     assert unknown_result.exit_code == EXIT_OK
     assert "KTL999 is 未実装/予約" in unknown_result.output
+
+
+def test_cli_explain_falls_back_to_packaged_rule_docs(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.setattr(cli, "_repo_rules_docs_dir", lambda: tmp_path)
+
+    result = runner.invoke(app, ["explain", "KTL001"])
+
+    assert result.exit_code == EXIT_OK
+    assert "# KTL001: Context Bloat" in result.output

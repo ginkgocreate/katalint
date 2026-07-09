@@ -18,6 +18,7 @@
   `feature/pr5-config-suppressions-baseline`.
 - Started PR-6 CI integration, dogfooding files, and examples on
   `feature/pr6-ci-dogfooding-examples`.
+- Started v0.1.0 release-readiness finish on `release/v0.1.0-readiness`.
 
 ## Findings
 
@@ -43,14 +44,17 @@
   read/write.
 - PR-6 dogfooding uses `fail_on: error` so warnings remain visible without
   blocking incremental adoption.
+- v0.1.0 finish promotes the runtime version from `0.1.0a1` to `0.1.0`, adds
+  MIT licensing, changelog, package metadata, package rule docs, and CI build
+  validation.
 
 ## Next Actions
 
 - Decide whether `Prohibition Overload` should become a later config rule under a
   new ID, or be dropped.
-- Open and merge PR-6 once review/CI passes.
-- Start PR-7 only if scaffold/init is still desired after v0.1.0 packaging
-  work is clear.
+- Open and merge the v0.1.0 release-readiness PR once review/CI passes.
+- Create the `v0.1.0` tag after the release-readiness PR is on `main`.
+- Publish to PyPI only after a human provides package-owner credentials.
 
 ## Stocked Issues
 

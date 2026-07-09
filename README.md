@@ -9,7 +9,7 @@ coding agents less reliable.
 It does not run agents, call models, or orchestrate workflows. It only checks
 the instructions you give to agents.
 
-Status: active v0 implementation. The CLI can discover targets, run the active
+Status: v0.1.0 release-ready. The CLI can discover targets, run the active
 deterministic rules, load `katalint.yml`, apply inline suppressions, and use a
 baseline file.
 
@@ -76,6 +76,12 @@ packets and handoff documents, where agent reliability often depends on clear
 acceptance criteria, verification commands, and explicit next actions.
 
 ## Quick start
+
+Install from a source checkout:
+
+```bash
+python -m pip install .
+```
 
 Basic CLI:
 
@@ -217,7 +223,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: python -m pip install -e .
+      - run: python -m pip install -e ".[dev]"
+      - run: pytest -q
+      - run: python -m build
       - run: katalint check
 ```
 
@@ -282,8 +290,15 @@ Then pass `--baseline katalint-baseline.json` or set `baseline:` in
 | Phase 4 | PR-5 to PR-6 | Configuration, suppressions, CI examples, and dogfooding |
 | Phase 5 | PR-7+ | Optional scaffold commands and experimental features |
 
-First public preview can happen after PR-4. A practical v0.1.0 should wait
-until PR-6 so adoption, CI examples, and dogfooding are in place.
+v0.1.0 includes the deterministic linter surface through PR-6. Scaffold/init
+commands remain outside v0.1.0 so the project keeps its first impression as a
+linter rather than a prompt generator.
+
+## Release
+
+- Version: 0.1.0
+- License: MIT
+- Changelog: `CHANGELOG.md`
 
 ## References
 
