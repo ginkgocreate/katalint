@@ -58,10 +58,22 @@ class ReleaseReadinessTests(unittest.TestCase):
             'python -m pip install -e ".[dev]"',
             "pytest -q",
             "python -m build",
+            "python -m pip install --force-reinstall dist/katalint-*.whl",
+            "katalint --version",
+            "katalint explain KTL001",
             "katalint check",
         ]:
             with self.subTest(command=command):
                 self.assertIn(command, workflow)
+
+    def test_ci_runs_supported_python_matrix(self) -> None:
+        workflow = self.read(".github/workflows/katalint.yml")
+
+        self.assertIn("matrix:", workflow)
+        self.assertIn("python-version:", workflow)
+        for version in ["3.11", "3.12", "3.13"]:
+            with self.subTest(version=version):
+                self.assertIn(version, workflow)
 
     def test_packaged_rule_docs_exist_for_active_rules(self) -> None:
         for rule_id in [

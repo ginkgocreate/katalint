@@ -47,6 +47,8 @@
 - v0.1.0 finish promotes the runtime version from `0.1.0a1` to `0.1.0`, adds
   MIT licensing, changelog, package metadata, package rule docs, and CI build
   validation.
+- Post-release maintenance PR adds CI Python matrix coverage, wheel smoke
+  checks, and rule catalogue parity tests after Sonnet/Fable review.
 
 ## Next Actions
 
@@ -55,6 +57,8 @@
 - Open and merge the v0.1.0 release-readiness PR once review/CI passes.
 - Create the `v0.1.0` tag after the release-readiness PR is on `main`.
 - Publish to PyPI only after a human provides package-owner credentials.
+- Keep post-release maintenance changes small and CI-only unless a rule behavior
+  change has its own task packet.
 
 ## Stocked Issues
 
