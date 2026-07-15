@@ -26,6 +26,10 @@ class InitFossilizationRule(Rule):
 
     max_file_commits: ClassVar[int] = 1
     min_repo_commits: ClassVar[int] = 8
+    configurable_options: ClassVar[dict[str, type]] = {
+        "max_file_commits": int,
+        "min_repo_commits": int,
+    }
 
     def check(self, file: Path) -> list[Finding]:
         if file.name not in _CONFIG_FILENAMES:
@@ -77,7 +81,10 @@ def _git_root(path: Path) -> Path | None:
 
 
 def _is_tracked(repo_root: Path, relative_path: Path) -> bool:
-    return _git(repo_root, "ls-files", "--error-unmatch", relative_path.as_posix()) is not None
+    return (
+        _git(repo_root, "ls-files", "--error-unmatch", relative_path.as_posix())
+        is not None
+    )
 
 
 def _count_repo_commits(repo_root: Path) -> int | None:

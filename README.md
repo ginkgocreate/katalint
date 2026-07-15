@@ -205,7 +205,9 @@ ignore:
 
 `fail_on: error` keeps warning findings visible without failing CI. Rule
 settings can override severity and rule-specific numeric thresholds such as
-`KTL001.max_lines` and `KTL104.max_files_per_task`.
+`KTL001.max_lines` and `KTL104.max_files_per_task`. Unknown rule IDs,
+unsupported option names, and threshold values that are not non-negative
+integers are reported as configuration usage errors (exit code 2).
 
 ## CI usage
 

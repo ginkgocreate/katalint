@@ -44,8 +44,7 @@ def test_markdown_bold_is_not_a_broad_glob(tmp_path):
     rule = ScopeTooWideRule()
     path = _write_task(
         tmp_path,
-        "# Task\n\nKeep **existing behavior** intact while touching "
-        "`src/logger.py`.\n",
+        "# Task\n\nKeep **existing behavior** intact while touching `src/logger.py`.\n",
     )
     assert rule.check(path) == []
 
@@ -136,6 +135,19 @@ def test_fenced_code_block_tokens_not_counted(tmp_path):
         "```\n"
         "a/b/c\nd/e/f\ng/h/i\nj/k/l\nm/n/o\np/q/r\ns/t/u\n"
         "```\n\n"
+        "Update `src/a.py` and `src/b.py`.\n"
+    )
+    path = _write_task(tmp_path, body)
+    assert rule.check(path) == []
+
+
+def test_tilde_fenced_code_block_tokens_not_counted(tmp_path):
+    rule = ScopeTooWideRule()
+    body = (
+        "# Task\n\nExample output:\n\n"
+        "~~~text\n"
+        "a/b/c\nd/e/f\ng/h/i\nj/k/l\nm/n/o\np/q/r\ns/t/u\n"
+        "~~~\n\n"
         "Update `src/a.py` and `src/b.py`.\n"
     )
     path = _write_task(tmp_path, body)
