@@ -13,6 +13,7 @@ class Rule:
     category: ClassVar[FindingCategory]
     default_severity: ClassVar[FindingSeverity] = "warning"
     target_kinds: ClassVar[tuple[TargetKind, ...] | None] = None
+    configurable_options: ClassVar[dict[str, type]] = {}
 
     def applies_to(self, kind: TargetKind) -> bool:
         if self.target_kinds is not None:

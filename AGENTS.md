@@ -15,6 +15,8 @@ Purpose: guidance for coding agents working on katalint.
 
 - Add or update tests before changing behavior.
 - Keep rule checks deterministic and safe for local development and CI.
+- Expose rule settings only through `Rule.configurable_options`; invalid user
+  configuration must produce a usage error rather than an internal error.
 - Run the relevant test suite and `katalint check` before handoff.
 - Record unresolved issues in `SCRATCHPAD.md` with a clear label and next step.
 

@@ -33,6 +33,10 @@ class ContextBloatRule(Rule):
     # Class-level constants so config can override them later (PR-5).
     max_lines: ClassVar[int] = 200
     max_bytes: ClassVar[int] = 32768
+    configurable_options: ClassVar[dict[str, type]] = {
+        "max_lines": int,
+        "max_bytes": int,
+    }
 
     def check(self, file: Path) -> list[Finding]:
         try:

@@ -8,6 +8,8 @@ Purpose: persistent Claude Code guidance for katalint.
 - Prefer small deterministic checks over semantic guesses.
 - Keep CLI behavior compatible with the public contract in `README.md`.
 - Use `docs/rules/index.md` and each `docs/rules/KTL*.md` page as rule anchors.
+- Declare supported numeric thresholds in `Rule.configurable_options`; never
+  treat structural rule attributes or methods as user configuration options.
 - Update tests and examples when changing CLI behavior, output shape, or rule
   configuration.
 

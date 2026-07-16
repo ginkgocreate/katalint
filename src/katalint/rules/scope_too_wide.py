@@ -9,6 +9,8 @@ from katalint.rules.base import Rule
 
 RULE_ID = "KTL104"
 
+_FENCE_MARKER_RE = re.compile(r"^[ \t]{0,3}(`{3,}|~{3,})")
+
 
 class ScopeTooWideRule(Rule):
     id: ClassVar[str] = RULE_ID
@@ -41,11 +43,39 @@ class ScopeTooWideRule(Rule):
     )
 
     max_files_per_task: ClassVar[int] = 5
+    configurable_options: ClassVar[dict[str, type]] = {
+        "max_files_per_task": int,
+    }
 
     KNOWN_CODE_EXTENSIONS: ClassVar[tuple[str, ...]] = (
-        "py", "ts", "tsx", "js", "jsx", "mjs", "cjs", "go", "rs", "java",
-        "rb", "css", "scss", "html", "json", "yaml", "yml", "toml", "md",
-        "sh", "c", "cc", "cpp", "h", "hpp", "sql", "kt", "swift",
+        "py",
+        "ts",
+        "tsx",
+        "js",
+        "jsx",
+        "mjs",
+        "cjs",
+        "go",
+        "rs",
+        "java",
+        "rb",
+        "css",
+        "scss",
+        "html",
+        "json",
+        "yaml",
+        "yml",
+        "toml",
+        "md",
+        "sh",
+        "c",
+        "cc",
+        "cpp",
+        "h",
+        "hpp",
+        "sql",
+        "kt",
+        "swift",
     )
 
     def check(self, file: Path) -> list[Finding]:
@@ -73,9 +103,7 @@ class ScopeTooWideRule(Rule):
         if not reasons:
             return []
 
-        message = (
-            f"{file.name} scope is too wide: " + "; ".join(reasons) + "."
-        )
+        message = f"{file.name} scope is too wide: " + "; ".join(reasons) + "."
         return [
             Finding(
                 rule_id=self.id,
@@ -105,7 +133,9 @@ class ScopeTooWideRule(Rule):
         lowered = text.lower()
         for phrase in self.REPO_WIDE_PHRASES:
             # Japanese phrases: match as-is (no case folding needed).
-            needle = phrase if any(ord(ch) > 0x2FFF for ch in phrase) else phrase.lower()
+            needle = (
+                phrase if any(ord(ch) > 0x2FFF for ch in phrase) else phrase.lower()
+            )
             haystack = text if any(ord(ch) > 0x2FFF for ch in phrase) else lowered
             if needle in haystack:
                 return phrase
@@ -115,13 +145,14 @@ class ScopeTooWideRule(Rule):
         # Strip fenced code blocks first: we only count files that are
         # explicitly enumerated in prose/lists, not incidental tokens
         # inside example command output or code snippets.
-        without_code_fences = re.sub(r"```.*?```", "", text, flags=re.DOTALL)
+        without_code_fences = _strip_fenced_code_blocks(text)
         # Strip URLs so we never mistake a URL path segment for a file path.
         without_urls = re.sub(r"https?://\S+", "", without_code_fences)
 
         path_token_re = re.compile(
             r"`?([A-Za-z0-9_.\-]+(?:/[A-Za-z0-9_.\-]+)+"
-            r"|[A-Za-z0-9_\-]+\.(?:" + "|".join(self.KNOWN_CODE_EXTENSIONS)
+            r"|[A-Za-z0-9_\-]+\.(?:"
+            + "|".join(self.KNOWN_CODE_EXTENSIONS)
             # Trailing boundary so a full extension is matched: ".tsx" must not
             # be truncated to ".ts", or app.ts and app.tsx would collapse into
             # one token and undercount the file list.
@@ -136,3 +167,29 @@ class ScopeTooWideRule(Rule):
             distinct.add(token)
 
         return len(distinct)
+
+
+def _strip_fenced_code_blocks(text: str) -> str:
+    retained_lines: list[str] = []
+    opening_marker: str | None = None
+
+    for line in text.splitlines(keepends=True):
+        marker_match = _FENCE_MARKER_RE.match(line)
+        marker = marker_match.group(1) if marker_match is not None else None
+
+        if opening_marker is None:
+            if marker is not None:
+                opening_marker = marker
+                continue
+            retained_lines.append(line)
+            continue
+
+        if (
+            marker is not None
+            and marker[0] == opening_marker[0]
+            and len(marker) >= len(opening_marker)
+            and line[marker_match.end() :].strip() == ""
+        ):
+            opening_marker = None
+
+    return "".join(retained_lines)

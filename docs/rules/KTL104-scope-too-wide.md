@@ -70,10 +70,11 @@ Implement a password reset flow, scoped to:
 ## Detection
 KTL104 is purely deterministic: it scans the raw task text with regular
 expressions and simple token counting, with no semantic understanding of the
-task. Fenced code blocks (```...```) and URLs are stripped before counting file
-paths, so example command output and links are never mistaken for scope. A file
-is counted at most once (deduplicated by its literal matched string), and the
-rule emits at most one finding per file that lists every signal that tripped.
+task. Backtick and tilde fenced code blocks, along with URLs, are stripped
+before counting file paths, so example command output and links are never
+mistaken for scope. A file is counted at most once (deduplicated by its literal
+matched string), and the rule emits at most one finding per file that lists
+every signal that tripped.
 
 ## Suggested remediation
 - Split the task into smaller task packets, each with a single focused goal.

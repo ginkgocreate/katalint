@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+import pytest
 from typer.testing import CliRunner
 
 import katalint.cli as cli
@@ -130,7 +131,9 @@ def test_baseline_can_be_written_and_then_filters_matching_findings(
     )
     assert write_result.exit_code == EXIT_OK
 
-    baseline = json.loads((tmp_path / "katalint-baseline.json").read_text(encoding="utf-8"))
+    baseline = json.loads(
+        (tmp_path / "katalint-baseline.json").read_text(encoding="utf-8")
+    )
     assert baseline["version"] == 1
     assert baseline["findings"][0]["rule_id"] == "KTL900"
 
@@ -164,7 +167,9 @@ targets:
     assert result.output.splitlines() == ["custom/AGENTS.md\tconfig"]
 
 
-def test_rule_option_override_reconfigures_loaded_rule(tmp_path: Path, monkeypatch) -> None:
+def test_rule_option_override_reconfigures_loaded_rule(
+    tmp_path: Path, monkeypatch
+) -> None:
     write_file(tmp_path / "AGENTS.md", "# Agents\nKeep this concise.\n")
     write_file(
         tmp_path / "katalint.yml",
@@ -194,3 +199,33 @@ def test_invalid_config_exits_as_usage_error(tmp_path: Path, monkeypatch) -> Non
 
     assert result.exit_code == EXIT_USAGE_ERROR
     assert "config error:" in result.stderr
+
+
+@pytest.mark.parametrize(
+    ("rule_config", "expected_error"),
+    [
+        ("KTL001:\n    check: false", "check is not a supported option"),
+        ("KTL001:\n    max_lines: many", "max_lines must be a non-negative integer"),
+        ("KTL001:\n    max_lines: true", "max_lines must be a non-negative integer"),
+        ("KTL001:\n    max_lines: -1", "max_lines must be a non-negative integer"),
+        ("KTL999:\n    severity: warning", "KTL999 is not a known rule"),
+    ],
+)
+def test_invalid_rule_configuration_exits_as_usage_error(
+    tmp_path: Path,
+    monkeypatch,
+    rule_config: str,
+    expected_error: str,
+) -> None:
+    write_file(tmp_path / "AGENTS.md", "# Agents\n")
+    write_file(
+        tmp_path / "katalint.yml",
+        f"version: 1\nrules:\n  {rule_config}\n",
+    )
+    monkeypatch.chdir(tmp_path)
+
+    result = runner.invoke(app, ["check"])
+
+    assert result.exit_code == EXIT_USAGE_ERROR
+    assert "config error:" in result.stderr
+    assert expected_error in result.stderr

@@ -93,7 +93,9 @@ def check(
         root = Path.cwd()
         config = load_config(root=root, config_path=config_path)
         target_paths = _target_paths(paths, config, root)
-        targets = _filter_ignored_targets(discover_targets(paths=target_paths), config.ignore)
+        targets = _filter_ignored_targets(
+            discover_targets(paths=target_paths), config.ignore
+        )
         if list_targets:
             _print_targets(targets)
             raise typer.Exit(EXIT_OK)
@@ -179,13 +181,27 @@ def _matches_any_ignore(path: str, ignore_patterns: tuple[str, ...]) -> bool:
 
 
 def _configure_rules(rules: list[Rule], config: KatalintConfig) -> None:
-    for rule in rules:
-        settings = config.rules.get(rule.id)
-        if settings is None:
-            continue
+    rules_by_id = {rule.id: rule for rule in rules}
+    unknown_rule_ids = sorted(set(config.rules) - set(rules_by_id))
+    if unknown_rule_ids:
+        raise ConfigError(f"rules.{unknown_rule_ids[0]} is not a known rule")
+
+    for rule_id, settings in config.rules.items():
+        rule = rules_by_id[rule_id]
         for option, value in settings.options.items():
-            if not hasattr(rule, option):
+            expected_type = rule.configurable_options.get(option)
+            if expected_type is None:
                 raise ConfigError(f"rules.{rule.id}.{option} is not a supported option")
+            if expected_type is int and (
+                not isinstance(value, int) or isinstance(value, bool) or value < 0
+            ):
+                raise ConfigError(
+                    f"rules.{rule.id}.{option} must be a non-negative integer"
+                )
+            if expected_type is not int and not isinstance(value, expected_type):
+                raise ConfigError(
+                    f"rules.{rule.id}.{option} must be a {expected_type.__name__}"
+                )
             setattr(rule, option, value)
 
 
@@ -246,9 +262,7 @@ def _read_suppressed_rules(path: Path) -> set[str]:
         if not reason:
             continue
         rules.update(
-            rule_id.upper()
-            for rule_id in re.split(r"[\s,]+", raw_rules)
-            if rule_id
+            rule_id.upper() for rule_id in re.split(r"[\s,]+", raw_rules) if rule_id
         )
     return rules
 
@@ -288,7 +302,9 @@ def _write_baseline(path: Path, findings: list[Finding]) -> None:
     )
 
 
-def _filter_baselined_findings(findings: list[Finding], baseline_path: Path) -> list[Finding]:
+def _filter_baselined_findings(
+    findings: list[Finding], baseline_path: Path
+) -> list[Finding]:
     fingerprints = _read_baseline_fingerprints(baseline_path)
     return [
         finding
@@ -314,7 +330,9 @@ def _read_baseline_fingerprints(path: Path) -> set[str]:
 
     fingerprints: set[str] = set()
     for raw_finding in raw_findings:
-        if isinstance(raw_finding, dict) and isinstance(raw_finding.get("fingerprint"), str):
+        if isinstance(raw_finding, dict) and isinstance(
+            raw_finding.get("fingerprint"), str
+        ):
             fingerprints.add(raw_finding["fingerprint"])
     return fingerprints
 

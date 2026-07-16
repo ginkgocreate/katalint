@@ -2,6 +2,16 @@
 
 All notable changes to katalint are documented here.
 
+## Unreleased
+
+### Fixed
+
+- Reject unknown rule IDs, internal rule attributes, and invalid numeric
+  thresholds as configuration usage errors instead of ignoring them or
+  crashing during a check.
+- Ignore file paths inside both backtick and tilde fenced code examples when
+  KTL104 counts the files named by a task packet.
+
 ## 0.1.0 - 2026-07-09
 
 Initial public release.

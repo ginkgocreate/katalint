@@ -19,6 +19,13 @@
 - Started PR-6 CI integration, dogfooding files, and examples on
   `feature/pr6-ci-dogfooding-examples`.
 - Started v0.1.0 release-readiness finish on `release/v0.1.0-readiness`.
+- Reviewed the latest `origin/main` in an isolated worktree so the older
+  `feature/pr2-engine` checkout and its local discovery change remain intact.
+- Added fail-fast validation for unknown rule IDs, unsupported rule attributes,
+  and invalid numeric thresholds.
+- Fixed KTL104 file counting for tilde-fenced Markdown examples and documented
+  both supported fence styles.
+- Refreshed AGENTS.md and CLAUDE.md with the rule-option validation contract.
 
 ## Findings
 
@@ -49,19 +56,24 @@
   validation.
 - Post-release maintenance PR adds CI Python matrix coverage, wheel smoke
   checks, and rule catalogue parity tests after Sonnet/Fable review.
+- Rule configuration previously used `hasattr`, which accidentally exposed
+  methods and structural attributes such as `check` and `id` as user options.
+- KTL104 stripped backtick fences before file counting but counted paths inside
+  equivalent tilde fences, causing false positives for Markdown examples.
 
 ## Next Actions
 
 - Decide whether `Prohibition Overload` should become a later config rule under a
   new ID, or be dropped.
-- Open and merge the v0.1.0 release-readiness PR once review/CI passes.
-- Create the `v0.1.0` tag after the release-readiness PR is on `main`.
-- Publish to PyPI only after a human provides package-owner credentials.
-- Keep post-release maintenance changes small and CI-only unless a rule behavior
-  change has its own task packet.
+- Review and merge the rule-configuration and KTL104 maintenance PR after CI.
+- Keep future post-release maintenance changes small and independently tested.
 
 ## Stocked Issues
 
 - [QUESTION] The earlier `feature/pr3.4-prohibition-overload` branch implements
   `Prohibition Overload` as KTL004, but the locked v0 catalogue defines KTL004
   as `Init Fossilization`. Decide whether Prohibition Overload gets a later ID.
+- [DEBT] KTL101-KTL104 each implement Markdown fence handling separately.
+  Consider a shared parser helper after adding cross-rule behavior tests.
+- [DEBT] CI has no configured static lint or format check; evaluate adding Ruff
+  in a separate maintenance PR.
