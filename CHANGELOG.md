@@ -2,7 +2,10 @@
 
 All notable changes to katalint are documented here.
 
-## Unreleased
+## 0.1.1 - 2026-07-19
+
+First release published to PyPI. (The v0.1.0 GitHub release predated the
+publish workflow, so its artifacts never reached PyPI.)
 
 ### Fixed
 

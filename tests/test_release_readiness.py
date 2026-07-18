@@ -38,14 +38,15 @@ class ReleaseReadinessTests(unittest.TestCase):
             project["classifiers"],
         )
 
-    def test_runtime_version_is_stable_v0_1_0(self) -> None:
+    def test_runtime_version_is_stable_v0_1_1(self) -> None:
         init_py = self.read("src/katalint/__init__.py")
 
-        self.assertIn('__version__ = "0.1.0"', init_py)
+        self.assertIn('__version__ = "0.1.1"', init_py)
 
     def test_changelog_documents_v0_1_0(self) -> None:
         changelog = self.read("CHANGELOG.md")
 
+        self.assertIn("## 0.1.1 - 2026-07-19", changelog)
         self.assertIn("## 0.1.0 - 2026-07-09", changelog)
         self.assertIn("KTL001", changelog)
         self.assertIn("KTL104", changelog)
