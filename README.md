@@ -1,5 +1,8 @@
 # katalint
 
+[![PyPI](https://img.shields.io/pypi/v/katalint.svg)](https://pypi.org/project/katalint/)
+[![Python versions](https://img.shields.io/pypi/pyversions/katalint.svg)](https://pypi.org/project/katalint/)
+[![Downloads](https://static.pepy.tech/badge/katalint/month)](https://pepy.tech/project/katalint)
 [![katalint](https://github.com/ginkgocreate/katalint/actions/workflows/katalint.yml/badge.svg)](https://github.com/ginkgocreate/katalint/actions/workflows/katalint.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -12,7 +15,7 @@ coding agents less reliable.
 It does not run agents, call models, or orchestrate workflows. It only checks
 the instructions you give to agents.
 
-Status: v0.1.0 release-ready. The CLI can discover targets, run the active
+Status: released on PyPI. The CLI can discover targets, run the active
 deterministic rules, load `katalint.yml`, apply inline suppressions, and use a
 baseline file.
 
@@ -80,7 +83,15 @@ acceptance criteria, verification commands, and explicit next actions.
 
 ## Quick start
 
-Install from a source checkout:
+Install from PyPI:
+
+```bash
+pip install katalint
+# or run without installing:
+uvx katalint check
+```
+
+Or from a source checkout:
 
 ```bash
 python -m pip install .
